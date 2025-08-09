@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Interactive Resume — Corey Francis</title>
+  <meta name="description" content="Interactive resume for Corey Francis, showcasing 15+ years of finance leadership, cybersecurity expertise, and technical skill." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* New, cooler color scheme */
+      --bg-dark: #0D1117;
+      --bg-medium: #161B22;
+      --bg-light: #21262D;
+      --border-color: #30363D;
+      --fg-bright: #e6edf3;
+      --fg-medium: #a1aab4;
+      --fg-dark: #7d8590;
+      --accent-primary: #22d3ee; /* Cyan */
+      --accent-secondary: #a855f7; /* Purple */
+      --success: #28a745;
+      --danger: #dc3545;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--fg-medium);
+      line-height: 1.6;
+      font-size: 16px;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Header */
+    .site-header {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background-color: rgba(13, 17, 23, 0.8);
+      border-bottom: 1px solid var(--border-color);
+      z-index: 1000;
+      padding: 16px 0;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-mark {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      color: var(--bg-dark);
+      font-weight: 800;
+      font-size: 16px;
+    }
+
+    .brand-text h1 {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--fg-bright);
+      margin: 0;
+    }
+
+    .brand-text p {
+      font-size: 14px;
+      margin: 0;
+    }
+
+    nav a {
+      color: var(--fg-medium);
+      text-decoration: none;
+      margin-left: 24px;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: var(--accent-primary);
+    }
+
+    nav a.cta {
+      padding: 8px 16px;
+      border: 1px solid var(--accent-primary);
+      border-radius: 8px;
+      color: var(--accent-primary);
+      background: rgba(34, 211, 238, 0.1);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+     nav a.cta:hover {
+      background-color: var(--accent-primary);
+      color: var(--bg-dark);
+     }
+
+    /* Hero Section */
+    .resume-hero {
+      padding: 120px 0 80px;
+      text-align: center;
+      background: radial-gradient(circle at 20% 20%, rgba(34, 211, 238, 0.1), transparent 40%),
+                  radial-gradient(circle at 80% 80%, rgba(168, 85, 247, 0.1), transparent 40%);
+    }
+
+    .resume-hero h1 {
+      font-size: 52px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      background: linear-gradient(45deg, var(--accent-primary), var(--fg-bright), var(--accent-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradient-flow 10s ease-in-out infinite;
+      background-size: 200% 200%;
+    }
+    
+    @keyframes gradient-flow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .resume-hero p {
+      font-size: 18px;
+      max-width: 700px;
+      margin: 0 auto 32px;
+      color: var(--fg-medium);
+    }
+
+    .hero-actions .button {
+      margin: 0 8px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: none;
+    }
+
+    .button.primary {
+      background: var(--accent-primary);
+      color: var(--bg-dark);
+    }
+    .button.primary:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 10px 20px rgba(34, 211, 238, 0.2);
+    }
+
+    .button.secondary {
+      background: transparent;
+      color: var(--fg-bright);
+      border: 1px solid var(--border-color);
+    }
+    .button.secondary:hover {
+      background-color: var(--bg-light);
+      border-color: var(--fg-medium);
+    }
+
+    /* Section Styling */
+    .section {
+      padding: 80px 0;
+    }
+    .section.alt {
+      background-color: var(--bg-medium);
+      border-top: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+    }
+    .section-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+    .section-header h2 {
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--fg-bright);
+      margin-bottom: 8px;
+    }
+    .section-header p {
+      font-size: 18px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Key Metrics Dashboard */
+    .metrics-dashboard {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .metric-card {
+      background: linear-gradient(145deg, var(--bg-medium), var(--bg-light));
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    .metric-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent-primary);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+    }
+
+    .metric-icon {
+      font-size: 28px;
+      margin-bottom: 12px;
+      line-height: 1;
+    }
+    
+    .metric-value {
+      font-size: 40px;
+      font-weight: 800;
+      color: var(--accent-primary);
+      margin-bottom: 4px;
+      display: block;
+      line-height: 1.1;
+    }
+
+    .metric-label {
+      color: var(--fg-bright);
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .metric-description {
+      color: var(--fg-dark);
+      font-size: 13px;
+      margin-top: 8px;
+    }
+
+    /* Career Timeline */
+    .career-timeline {
+      position: relative;
+      margin: 0 auto;
+      max-width: 900px;
+    }
+    .timeline-line {
+      position: absolute;
+      left: 19px;
+      top: 10px;
+      bottom: 10px;
+      width: 2px;
+      background: linear-gradient(180deg, var(--accent-secondary), var(--accent-primary));
+      opacity: 0.5;
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 48px;
+      padding-left: 60px;
+    }
+    .timeline-marker {
+      position: absolute;
+      left: 10px;
+      top: 5px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--bg-medium);
+      border: 3px solid var(--accent-primary);
+      z-index: 2;
+      transition: all 0.3s ease;
+    }
+    .timeline-item:hover .timeline-marker {
+        transform: scale(1.2);
+        background-color: var(--accent-primary);
+    }
+    .timeline-content {
+      background: var(--bg-light);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 24px;
+      transition: all 0.3s ease;
+    }
+    .timeline-item:hover .timeline-content {
+        border-color: var(--accent-secondary);
+        transform: translateX(10px);
+    }
+    .timeline-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 4px;
+    }
+    .timeline-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--fg-bright);
+    }
+    .timeline-company {
+        font-weight: 500;
+        color: var(--fg-medium);
+    }
+    .timeline-period {
+      color: var(--fg-dark);
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+    .timeline-description {
+        margin-bottom: 20px;
+    }
+    .timeline-achievements {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+    .achievement-tag {
+        background-color: rgba(34, 211, 238, 0.1);
+        color: var(--accent-primary);
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 500;
+        border: 1px solid rgba(34, 211, 238, 0.2);
+    }
+
+    /* Skills Section */
+    .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 32px;
+    }
+    .skills-category {
+        background-color: var(--bg-light);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 32px;
+    }
+    .skills-category h3 {
+        font-size: 22px;
+        font-weight: 600;
+        color: var(--fg-bright);
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .category-icon {
+        font-size: 24px;
+    }
+    .skills-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+    .skill-tag {
+        background-color: var(--bg-medium);
+        border: 1px solid var(--border-color);
+        color: var(--fg-medium);
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-size: 15px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    .skill-tag:hover {
+        color: var(--accent-primary);
+        border-color: var(--accent-primary);
+        transform: translateY(-2px);
+    }
+
+    /* Certifications */
+    .certifications-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 24px;
+    }
+    .cert-card {
+        background-color: var(--bg-light);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 24px;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+    .cert-card:hover {
+        transform: translateY(-5px);
+        border-color: var(--accent-secondary);
+    }
+    .cert-badge {
+        font-size: 40px;
+        margin-bottom: 16px;
+    }
+    .cert-name {
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--fg-bright);
+        margin-bottom: 4px;
+    }
+    .cert-issuer {
+        font-size: 14px;
+        color: var(--fg-medium);
+    }
+
+    /* Animation */
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    .animate-on-scroll.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .resume-hero h1 { font-size: 36px; }
+      .resume-hero p { font-size: 16px; }
+      .section-header h2 { font-size: 28px; }
+      .metrics-dashboard { grid-template-columns: 1fr 1fr; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .timeline-item { padding-left: 40px; }
+      .timeline-line { left: 9px; }
+      .timeline-marker { left: 0; }
+      nav { display: none; /* Simple hiding for demo, can be replaced with hamburger menu */ }
+    }
+    @media (max-width: 480px) {
+        .metrics-dashboard { grid-template-columns: 1fr; }
+    }
+
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+        <div class="header-content">
+            <div class="brand">
+                <div class="brand-mark">CF</div>
+                <div class="brand-text">
+                <h1>Corey Francis</h1>
+                <p>Finance Director & Tech Strategist</p>
+                </div>
+            </div>
+            <nav>
+                <a href="#experience">Experience</a>
+                <a href="#skills">Skills</a>
+                <a href="#certs">Certifications</a>
+                <a href="#" class="cta">Contact</a>
+            </nav>
+        </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="resume-hero">
+      <div class="container">
+        <h1 class="animate-on-scroll">A Career in Finance & Technology</h1>
+        <p class="animate-on-scroll" style="transition-delay: 100ms;">
+          An interactive journey through 15+ years of driving financial integrity, leading high-performing teams, and leveraging technology to optimize systems and reduce risk.
+        </p>
+        <div class="hero-actions animate-on-scroll" style="transition-delay: 200ms;">
+          <a href="#experience" class="button secondary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="m19 19-7-7 7-7"/></svg>
+            Explore My Journey
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="metrics" class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="animate-on-scroll">Career by the Numbers</h2>
+          <p class="animate-on-scroll" style="transition-delay: 100ms;">Key metrics that highlight a history of significant, measurable impact.</p>
+        </div>
+        <div class="metrics-dashboard">
+          <div class="metric-card animate-on-scroll" style="transition-delay: 0ms;">
+            <div class="metric-icon">💰</div>
+            <span class="metric-value counter" data-target="5.1" data-suffix="B+">0</span>
+            <div class="metric-label">Payments Managed</div>
+            <div class="metric-description">Annual enterprise payment processing</div>
+          </div>
+          
+          <div class="metric-card animate-on-scroll" style="transition-delay: 100ms;">
+            <div class="metric-icon">👥</div>
+            <span class="metric-value counter" data-target="55">0</span>
+            <div class="metric-label">Team Members Led</div>
+            <div class="metric-description">Largest cross-functional team managed</div>
+          </div>
+          
+          <div class="metric-card animate-on-scroll" style="transition-delay: 200ms;">
+            <div class="metric-icon">📈</div>
+            <span class="metric-value counter" data-target="1.7" data-prefix="$" data-suffix="M+">0</span>
+            <div class="metric-label">Value Recovered</div>
+            <div class="metric-description">Combined vendor credits & rebates secured</div>
+          </div>
+          
+          <div class="metric-card animate-on-scroll" style="transition-delay: 300ms;">
+            <div class="metric-icon">🛡️</div>
+            <span class="metric-value counter" data-target="99" data-suffix="%">0</span>
+            <div class="metric-label">Risk Reduction</div>
+            <div class="metric-description">Reduced unclaimed property exposure</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience" class="section alt">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="animate-on-scroll">Professional Journey</h2>
+          <p class="animate-on-scroll" style="transition-delay: 100ms;">A timeline of roles, responsibilities, and key achievements.</p>
+        </div>
+        <div class="career-timeline">
+          <div class="timeline-line"></div>
+          
+          <div class="timeline-item animate-on-scroll">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div class="timeline-header">
+                  <div>
+                    <div class="timeline-title">Director of Accounting</div>
+                    <div class="timeline-company">Fresh Start Women's Foundation</div>
+                  </div>
+                  <div class="timeline-period">Oct 2024 - Present</div>
+              </div>
+              <p class="timeline-description">Leading accounting for a prominent non-profit, implementing modern financial systems and ensuring robust compliance with grant requirements and cybersecurity standards.</p>
+              <div class="timeline-achievements">
+                <span class="achievement-tag">PCI DSS Compliance</span>
+                <span class="achievement-tag">QuickBooks Online Implementation</span>
+                <span class="achievement-tag">Procard System Deployment</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item animate-on-scroll">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div class="timeline-header">
+                  <div>
+                    <div class="timeline-title">Finance Manager | AP IT Tester</div>
+                    <div class="timeline-company">Insight</div>
+                  </div>
+                  <div class="timeline-period">Jul 2021 - Nov 2023</div>
+              </div>
+              <p class="timeline-description">Managed $1B+ in monthly payments and developed advanced financial models, increasing rebate revenue by 30% while ensuring enterprise-grade security protocols.</p>
+              <div class="timeline-achievements">
+                <span class="achievement-tag">$1B+ Monthly Payments</span>
+                <span class="achievement-tag">5,000+ Vendor Network</span>
+                <span class="achievement-tag">30% Rebate Increase</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item animate-on-scroll">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div class="timeline-header">
+                  <div>
+                    <div class="timeline-title">Senior Finance Manager</div>
+                    <div class="timeline-company">Eriks North America</div>
+                  </div>
+                  <div class="timeline-period">Oct 2018 - Jul 2021</div>
+              </div>
+              <p class="timeline-description">Led a 55-member finance team, achieving a monumental reduction in unclaimed property exposure from $25M to under $175K and extending payment cycles by 68%.</p>
+              <div class="timeline-achievements">
+                <span class="achievement-tag">$24.8M Risk Reduction</span>
+                <span class="achievement-tag">Payment Cycle Extension (25 to 42 Days)</span>
+                <span class="achievement-tag">$435K+ Vendor Rebates Recovered</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item animate-on-scroll">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div class="timeline-header">
+                  <div>
+                    <div class="timeline-title">Finance Manager | AP Manager</div>
+                    <div class="timeline-company">Wesco Distribution</div>
+                  </div>
+                  <div class="timeline-period">Oct 2012 - Jul 2016</div>
+              </div>
+              <p class="timeline-description">Oversaw $5.1B+ in annual payments, securing $1.3M in new rebate revenue and saving $200K annually by internalizing statement reviews.</p>
+              <div class="timeline-achievements">
+                <span class="achievement-tag">$5.1B Annual Payments</span>
+                <span class="achievement-tag">$1.3M New Rebate Revenue</span>
+                <span class="achievement-tag">82.5% Compliance Improvement</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="animate-on-scroll">Core Competencies</h2>
+                <p class="animate-on-scroll" style="transition-delay: 100ms;">A dual-threat skill set bridging strategic finance with modern technology.</p>
+            </div>
+            <div class="skills-grid">
+                <div class="skills-category animate-on-scroll">
+                    <h3><span class="category-icon">💼</span>Finance &amp; Leadership</h3>
+                    <div class="skills-list">
+                        <span class="skill-tag">Financial Analysis & Modeling</span>
+                        <span class="skill-tag">ERP Systems (Oracle, SAP, Workday)</span>
+                        <span class="skill-tag">Process Improvement & Automation</span>
+                        <span class="skill-tag">Accounts Payable & Receivable</span>
+                        <span class="skill-tag">Vendor Management & Governance</span>
+                        <span class="skill-tag">Budgeting & Forecasting</span>
+                        <span class="skill-tag">Internal Controls & Auditing</span>
+                        <span class="skill-tag">Team Leadership & Development</span>
+                    </div>
+                </div>
+                <div class="skills-category animate-on-scroll">
+                    <h3><span class="category-icon">💻</span>Technology &amp; Security</h3>
+                    <div class="skills-list">
+                        <span class="skill-tag">Cybersecurity & Risk Management</span>
+                        <span class="skill-tag">PCI DSS Compliance</span>
+                        <span class="skill-tag">Data Security & Encryption</span>
+                        <span class="skill-tag">PowerBI & Data Visualization</span>
+                        <span class="skill-tag">SQL</span>
+                        <span class="skill-tag">Python (Scripting)</span>
+                        <span class="skill-tag">IT System Testing</span>
+                        <span class="skill-tag">Algorithmic Trading Concepts</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="certs" class="section alt">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="animate-on-scroll">Professional Certifications</h2>
+          <p class="animate-on-scroll" style="transition-delay: 100ms;">Commitment to continuous learning in high-demand technology and security domains.</p>
+        </div>
+        <div class="certifications-grid">
+          <div class="cert-card animate-on-scroll">
+            <div class="cert-badge">🛡️</div>
+            <div class="cert-name">CompTIA Security+</div>
+            <div class="cert-issuer">CompTIA</div>
+          </div>
+          <div class="cert-card animate-on-scroll" style="transition-delay: 100ms;">
+            <div class="cert-badge">🌐</div>
+            <div class="cert-name">CompTIA Network+</div>
+            <div class="cert-issuer">CompTIA</div>
+          </div>
+          <div class="cert-card animate-on-scroll" style="transition-delay: 200ms;">
+            <div class="cert-badge">🔐</div>
+            <div class="cert-name">Google Cybersecurity</div>
+            <div class="cert-issuer">Google</div>
+          </div>
+          <div class="cert-card animate-on-scroll" style="transition-delay: 300ms;">
+            <div class="cert-badge">☁️</div>
+            <div class="cert-name">Cloud Security Engineer</div>
+            <div class="cert-issuer">Google Cloud</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Animate elements on scroll
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target); // Animate only once
+          }
+        });
+      }, { threshold: 0.1 });
+
+      const elementsToAnimate = document.querySelectorAll('.animate-on-scroll');
+      elementsToAnimate.forEach(el => observer.observe(el));
+
+      // Counter animation
+      const counterObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const counter = entry.target;
+            const target = parseFloat(counter.getAttribute('data-target'));
+            const duration = 2000;
+            const prefix = counter.getAttribute('data-prefix') || '';
+            const suffix = counter.getAttribute('data-suffix') || '';
+            
+            let start = 0;
+            const stepTime = 16; // roughly 60fps
+            const totalSteps = duration / stepTime;
+            const increment = target / totalSteps;
+
+            const timer = setInterval(() => {
+              start += increment;
+              if (start >= target) {
+                start = target;
+                clearInterval(timer);
+              }
+              
+              // Format number to one decimal place if it's not an integer
+              const isFloat = target % 1 !== 0;
+              counter.textContent = prefix + (isFloat ? start.toFixed(1) : Math.round(start)) + suffix;
+
+            }, stepTime);
+            
+            observer.unobserve(counter);
+          }
+        });
+      }, { threshold: 0.5 });
+
+      const counters = document.querySelectorAll('.counter');
+      counters.forEach(counter => counterObserver.observe(counter));
+    });
+  </script>
+</body>
+</html>
