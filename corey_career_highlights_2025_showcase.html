@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Corey M. Francis — Career Highlights (2025)</title>
+  <meta name="description" content="Finance Leader • Cybersecurity Professional • Process Innovation Expert — Career Highlights" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg-0:#0b0f17; /* page */
+      --bg-1:#0e1420; /* cards */
+      --txt:#e6edf3;  /* primary text */
+      --muted:#9fb3c8; /* secondary text */
+      --brand:#7cfff3; /* mint */
+      --brand-2:#7a5cff; /* iris */
+      --brand-3:#ff8bd1; /* pink */
+      --ok:#22c55e; --warn:#f59e0b; --info:#06b6d4;
+      --ring: 0 0 0 2px color-mix(in oklab, var(--brand) 35%, transparent);
+      --radius: 18px; --radius-sm:12px;
+      --glass: rgba(255,255,255,.06);
+      --border: 1px solid rgba(255,255,255,.12);
+      --shadow: 0 20px 60px rgba(18, 23, 39, .55), 0 8px 20px rgba(0,0,0,.35);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color:var(--txt); background:radial-gradient(1200px 800px at 80% -10%, rgba(122,92,255,.25), transparent 60%),
+                        radial-gradient(1000px 800px at -10% 10%, rgba(124,255,243,.18), transparent 50%),
+                        linear-gradient(180deg, #0a0f18 0%, #0b1220 100%);
+      overflow-x:hidden;
+    }
+
+    .container{max-width:1200px; margin-inline:auto; padding:32px 20px 120px}
+
+    /* —— Hero —— */
+    .hero{ position:relative; display:grid; gap:22px; padding:56px 18px; place-items:center; text-align:center }
+    .hero h1{
+      font-weight:800; font-size: clamp(2rem, 5vw, 3.25rem); letter-spacing:.2px; line-height:1.1;
+      background:linear-gradient(92deg, var(--brand) 0%, var(--brand-2) 55%, var(--brand-3) 100%);
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+      filter: drop-shadow(0 6px 30px rgba(124,255,243,.18));
+      animation: riseIn .9s ease-out both;
+    }
+    .hero p{color:var(--muted); max-width:850px; font-size:clamp(.98rem, 1.6vw, 1.12rem)}
+
+    .hero-cta{ display:flex; flex-wrap:wrap; gap:14px; justify-content:center; margin-top:12px }
+    .btn{
+      padding:12px 18px; border-radius:999px; border:var(--border); background:color-mix(in oklab, var(--glass) 70%, transparent);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      text-decoration:none; color:var(--txt); font-weight:700; letter-spacing:.2px;
+      box-shadow:var(--shadow); transition:.25s ease transform, .25s ease box-shadow;
+    }
+    .btn:hover{ transform: translateY(-2px); box-shadow: 0 16px 40px rgba(124,255,243,.18) }
+    .btn.primary{ background:linear-gradient(135deg, color-mix(in oklab, var(--brand) 70%, #fff 10%), var(--brand-2));
+                  border: none; color:#071017 }
+
+    /* Animated accent orbs */
+    .orb{ position:absolute; width:420px; height:420px; border-radius:50%; filter: blur(60px); opacity:.45; pointer-events:none }
+    .orb.a{ background: radial-gradient(circle at 30% 30%, var(--brand), transparent 55%); top:-60px; right:-120px; animation: float 12s ease-in-out infinite }
+    .orb.b{ background: radial-gradient(circle at 70% 70%, var(--brand-2), transparent 55%); bottom:-120px; left:-120px; animation: float 15s ease-in-out -3s infinite }
+
+    /* —— Metric Cards —— */
+    .metrics{ display:grid; grid-template-columns:repeat(4, minmax(160px, 1fr)); gap:16px; margin:26px auto 10px; width:min(100%, 1100px) }
+    .metric{ position:relative; padding:18px 16px; border-radius:var(--radius); background:var(--glass); border:var(--border); overflow:hidden }
+    .metric::after{ content:""; position:absolute; inset:0; background: radial-gradient( 500px 180px at 0% 0%, rgba(124,255,243,.10), transparent 35%);
+      mask: linear-gradient(#000, transparent 60%); pointer-events:none }
+    .metric h3{ font-size:.78rem; font-weight:600; color:var(--muted); margin:0 0 6px }
+    .metric .num{ font-weight:800; font-size: clamp(1.25rem, 3vw, 1.9rem) }
+    .metric .num .unit{ opacity:.8; font-weight:700; font-size:.9em }
+    .metric .pill{ display:inline-flex; align-items:center; gap:8px; padding:4px 10px; border-radius:999px; font-size:.75rem; border:1px solid rgba(255,255,255,.16); color:var(--muted) }
+
+    /* —— Cards Grid —— */
+    .grid{ display:grid; gap:20px; grid-template-columns: repeat(12, 1fr); margin-top:28px }
+    .card{ grid-column: span 6; background:var(--glass); border:var(--border); border-radius:var(--radius); padding:22px; box-shadow:var(--shadow); position:relative; overflow:hidden }
+    @media (max-width: 960px){ .card{ grid-column:1/-1 } .metrics{ grid-template-columns:repeat(2, 1fr) } }
+
+    .card h2{ font-size:1.2rem; margin:0 0 10px; font-weight:800; letter-spacing:.2px; color:var(--txt) }
+    .card p{ color:var(--muted); margin:.4rem 0 1rem; line-height:1.6 }
+
+    .badges{ display:flex; flex-wrap:wrap; gap:10px; margin-top:6px }
+    .badge{ padding:8px 12px; border-radius:999px; border:1px solid rgba(255,255,255,.18); background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02)); font-size:.85rem }
+
+    /* —— Timeline —— */
+    .timeline{ position:relative; margin-top:34px; padding-top:8px }
+    .timeline::before{ content:""; position:absolute; left:calc(50% - 1px); top:0; bottom:0; width:2px; background:linear-gradient(180deg, var(--brand), var(--brand-2)) }
+    .t-row{ display:grid; grid-template-columns: repeat(2, 1fr); gap:20px; margin:20px 0; align-items:stretch }
+    .t-card{ background:var(--glass); border:var(--border); border-radius:var(--radius); padding:18px 18px 18px; box-shadow:var(--shadow); position:relative }
+    .t-card h3{ margin:0 0 6px; font-size:1.05rem }
+    .t-card .role{ color:var(--brand); font-weight:800 }
+    .t-card .meta{ color:var(--muted); font-size:.9rem }
+    .t-card ul{ margin:10px 0 0 18px; color:var(--txt) }
+    .dot{ position:absolute; top:18px; width:14px; height:14px; border-radius:50%; background:var(--brand); box-shadow:0 0 20px rgba(124,255,243,.6) }
+    .left .dot{ right:-8px } .right .dot{ left:-8px }
+
+    @media (max-width: 900px){
+      .timeline::before{ left:18px } .t-row{ grid-template-columns:1fr } .left .dot,.right .dot{ left:10px } .t-card{ margin-left:26px }
+    }
+
+    /* —— Marquee —— */
+    .marquee{ overflow:hidden; border:var(--border); border-radius:var(--radius); background: rgba(255,255,255,.03); margin-top:28px }
+    .track{ display:flex; gap:18px; padding:12px; animation: scroll 26s linear infinite }
+    .chip{ padding:8px 14px; border-radius:999px; background:linear-gradient(180deg, rgba(122,92,255,.25), rgba(122,92,255,.05)); border:1px solid rgba(122,92,255,.35) }
+    @keyframes scroll{ to{ transform: translateX(-50%) } }
+
+    /* —— Footer —— */
+    footer{ margin-top:44px; display:grid; place-items:center; color:var(--muted) }
+    footer a{ color:var(--brand); text-decoration:none; font-weight:700 }
+
+    /* —— Motion —— */
+    @keyframes float{ 0%{ transform: translateY(0) } 50%{ transform: translateY(-16px) } 100%{ transform: translateY(0) } }
+    @keyframes riseIn{ from{ opacity:0; transform: translateY(22px) } to{ opacity:1; transform: translateY(0) } }
+
+    /* Accessibility: respect reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      .track{ animation:none }
+      .orb{ animation:none }
+      .btn, .metric, .card, .t-card{ transition:none }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <section class="hero" aria-label="intro">
+      <div class="orb a" aria-hidden="true"></div>
+      <div class="orb b" aria-hidden="true"></div>
+      <h1><span id="type">Corey M. Francis</span></h1>
+      <p>Finance Leader • Cybersecurity Professional • Process Innovation Expert. I build resilient payment operations, secure data flows, and insight‑rich reporting that executives trust.</p>
+      <div class="hero-cta">
+        <a class="btn primary" href="#contact">Let's Talk</a>
+        <a class="btn" href="#highlights">Career Highlights</a>
+        <a class="btn" href="#timeline">Experience</a>
+        <!-- If you host the PDF, update href below -->
+        <a class="btn" href="Corey_Francis_Resume.pdf" download>Download Résumé (PDF)</a>
+      </div>
+      <div class="metrics" id="highlights" aria-label="key metrics">
+        <div class="metric" role="group" aria-label="Annual Payment Volume">
+          <h3>Annual Payment Volume Managed</h3>
+          <div class="num" data-target="5.1" data-suffix="B">$<span class="val">0</span><span class="unit">B+</span></div>
+          <div class="pill">Wesco Distribution (annual)</div>
+        </div>
+        <div class="metric" role="group" aria-label="Monthly Vendor Payments">
+          <h3>Monthly Vendor Payments</h3>
+          <!-- NOTE: Kept at $1B+ based on résumé. If $5B monthly is accurate, change data-target to 5. -->
+          <div class="num" data-target="1" data-suffix="B">$<span class="val">0</span><span class="unit">B+</span></div>
+          <div class="pill">Insight (monthly)</div>
+        </div>
+        <div class="metric" role="group" aria-label="Team Leadership">
+          <h3>Team Leadership</h3>
+          <div class="num" data-target="15"> <span class="val">0</span></div>
+          <div class="pill">Direct reports</div>
+        </div>
+        <div class="metric" role="group" aria-label="Vendors">
+          <h3>Vendor Network</h3>
+          <div class="num" data-target="5000"> <span class="val">0</span><span class="unit">+</span></div>
+          <div class="pill">Active suppliers</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid" aria-label="value areas">
+      <article class="card" style="grid-column: span 7" aria-labelledby="v1">
+        <h2 id="v1">Finance Leadership & Controls</h2>
+        <p>15+ years owning AP/GL operations and cash cycles across enterprise and non‑profit organizations. Leader in closing accuracy, audit readiness, and rebate optimization.</p>
+        <div class="badges">
+          <span class="badge">$435K+ recovered credits</span>
+          <span class="badge">$1.3M annual rebates</span>
+          <span class="badge">82.5% compliance lift</span>
+          <span class="badge">25→42 day payment cycle</span>
+        </div>
+      </article>
+      <article class="card" style="grid-column: span 5" aria-labelledby="v2">
+        <h2 id="v2">Cybersecurity x Finance</h2>
+        <p>Bridging financial controls with modern security: CompTIA Security+, Google Cybersecurity, and PCI‑aware payment design. I embed data protection into the money flow.</p>
+        <div class="badges">
+          <span class="badge">PCI DSS aware</span>
+          <span class="badge">Secure Procard rollouts</span>
+          <span class="badge">Data governance</span>
+        </div>
+      </article>
+
+      <article class="card" style="grid-column: span 6" aria-labelledby="v3">
+        <h2 id="v3">ERP & Process Transformation</h2>
+        <p>Hands‑on with Oracle, SAP, Workday, and QBO. I streamline procure‑to‑pay, harden controls, and turn reporting into live KPIs executives can act on.</p>
+        <div class="badges">
+          <span class="badge">Oracle • SAP • Workday • QBO</span>
+          <span class="badge">Lean daily management</span>
+          <span class="badge">SOX‑friendly workflows</span>
+        </div>
+      </article>
+
+      <article class="card" style="grid-column: span 6" aria-labelledby="v4">
+        <h2 id="v4">Data & Decision Intelligence</h2>
+        <p>PowerBI dashboards, SQL, and Python scripts that surface fraud risks, vendor opportunities, and cash timing—without breaking the audit trail.</p>
+        <div class="badges">
+          <span class="badge">PowerBI & SQL</span>
+          <span class="badge">Python reporting</span>
+          <span class="badge">Exec‑ready KPI packs</span>
+        </div>
+      </article>
+    </section>
+
+    <section id="timeline" class="timeline" aria-label="experience timeline">
+      <div class="t-row">
+        <div class="t-card left">
+          <div class="dot" aria-hidden="true"></div>
+          <h3 class="role">Director of Accounting</h3>
+          <div class="meta">Fresh Start Women's Foundation • Oct 2024 – Aug 2025</div>
+          <ul>
+            <li>Implemented QuickBooks Online; improved month‑end close and audit readiness.</li>
+            <li>Integrated payment systems with security controls aligned to PCI standards.</li>
+            <li>Led budgeting/forecasting aligned to program and grant objectives.</li>
+          </ul>
+        </div>
+        <div class="t-card right">
+          <div class="dot" aria-hidden="true"></div>
+          <h3 class="role">Finance Manager & AP IT Tester</h3>
+          <div class="meta">Insight • Jul 2021 – Nov 2023</div>
+          <ul>
+            <li>Oversaw <strong>$1B+/mo</strong> disbursements to <strong>5,000+ vendors</strong>.</li>
+            <li>Built executive dashboards and models; increased card rebates by <strong>30%</strong> to <strong>$1.3M</strong>.</li>
+            <li>Deployed secure Procard systems with encryption & data‑protection controls.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="t-row">
+        <div class="t-card left">
+          <div class="dot" aria-hidden="true"></div>
+          <h3 class="role">Senior Finance Manager, North America</h3>
+          <div class="meta">ERIKS North America • Oct 2018 – Jul 2021</div>
+          <ul>
+            <li>Led a <strong>15‑member</strong> team across AP/AR/GL; extended DPO from <strong>25→42 days</strong>.</li>
+            <li>Cut unclaimed property exposure from <strong>$25M</strong> to <strong>&gt;$175K</strong> in one year.</li>
+            <li>Recovered <strong>$435K+</strong> through vendor credit remediation.</li>
+          </ul>
+        </div>
+        <div class="t-card right">
+          <div class="dot" aria-hidden="true"></div>
+          <h3 class="role">AP Manager & Finance Manager</h3>
+          <div class="meta">Wesco Distribution • Oct 2012 – Jul 2016</div>
+          <ul>
+            <li>Managed <strong>$5.1B+</strong> in annual payments across six bank accounts.</li>
+            <li>Implemented card strategy securing <strong>$1.3M</strong> in rebates; reduced fees by <strong>$200K</strong>/yr.</li>
+            <li>Championed Lean practices; improved tax retention compliance by <strong>82.5%</strong>.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="marquee" aria-label="tools">
+      <div class="track" aria-hidden="true">
+        <span class="chip">Oracle</span>
+        <span class="chip">SAP</span>
+        <span class="chip">Workday</span>
+        <span class="chip">QuickBooks Online</span>
+        <span class="chip">PowerBI</span>
+        <span class="chip">SQL</span>
+        <span class="chip">Python</span>
+        <span class="chip">Linux</span>
+        <span class="chip">PCI DSS</span>
+        <span class="chip">CompTIA Security+</span>
+        <span class="chip">Google Cybersecurity</span>
+        <!-- duplicate for continuous loop -->
+        <span class="chip">Oracle</span>
+        <span class="chip">SAP</span>
+        <span class="chip">Workday</span>
+        <span class="chip">QuickBooks Online</span>
+        <span class="chip">PowerBI</span>
+        <span class="chip">SQL</span>
+        <span class="chip">Python</span>
+        <span class="chip">Linux</span>
+        <span class="chip">PCI DSS</span>
+        <span class="chip">CompTIA Security+</span>
+        <span class="chip">Google Cybersecurity</span>
+      </div>
+    </section>
+
+    <footer id="contact">
+      <p>📍 Mesa, AZ • <a href="mailto:coreyfrancis1981@outlook.com">coreyfrancis1981@outlook.com</a> • <a href="https://www.linkedin.com/in/coreyfrancis1066" target="_blank" rel="noreferrer noopener">LinkedIn</a></p>
+    </footer>
+  </div>
+
+  <script>
+    // Typewriter effect for name
+    const typeEl = document.getElementById('type');
+    const full = 'Corey M. Francis';
+    typeEl.textContent = '';
+    let i = 0; const speed = 55;
+    const typer = () => { if(i < full.length){ typeEl.textContent += full.charAt(i++); setTimeout(typer, speed) } };
+    window.requestAnimationFrame(typer);
+
+    // Counter animation for metrics
+    const counters = document.querySelectorAll('.num');
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          const el = entry.target; const isMoney = el.textContent.trim().startsWith('$');
+          const target = parseFloat(el.dataset.target); const suffix = el.dataset.suffix || '';
+          const valEl = el.querySelector('.val'); const steps = 42; let cur = 0; let t = 0;
+          const tick = ()=>{ t++; cur += target/steps; if(cur>=target){ cur=target }
+            valEl.textContent = isMoney ? cur.toFixed( cur>=10? 0 : 1 ) : Math.floor(cur).toLocaleString();
+            if(t<steps) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick); io.unobserve(el);
+        }
+      })
+    },{threshold:.5});
+    counters.forEach(c=> io.observe(c));
+
+    // Gentle parallax on mouse move
+    const orbs = document.querySelectorAll('.orb');
+    let sx=0, sy=0; window.addEventListener('pointermove', (e)=>{
+      const x = (e.clientX / window.innerWidth) - .5; const y = (e.clientY / window.innerHeight) - .5;
+      sx += (x - sx) * .08; sy += (y - sy) * .08;
+      orbs.forEach((o, i)=>{ o.style.transform = `translate(${sx * (16 + i*8)}px, ${sy * (12 + i*6)}px)` })
+    }, {passive:true});
+  </script>
+</body>
+</html>
