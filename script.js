@@ -1,384 +1,319 @@
-// Enhanced Portfolio Script - Corey Francis
-// Interactive features for trading-style portfolio
+// Mobile Navigation Toggle
+const hamburger = document.querySelector('.hamburger');
+const navMenu = document.querySelector('.nav-menu');
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize all features
-    initParticles();
-    initScrollEffects();
-    initDashboard();
-    initMobileMenu();
-    initContactForm();
-    initAnimations();
+hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    navMenu.classList.toggle('active');
 });
 
-// Particle Background
-function initParticles() {
-    if (typeof particlesJS !== 'undefined') {
-        particlesJS('particles-js', {
-            particles: {
-                number: {
-                    value: 50,
-                    density: {
-                        enable: true,
-                        value_area: 800
-                    }
-                },
-                color: {
-                    value: '#06d6a0'
-                },
-                shape: {
-                    type: 'circle',
-                    stroke: {
-                        width: 0,
-                        color: '#000000'
-                    }
-                },
-                opacity: {
-                    value: 0.1,
-                    random: false,
-                    anim: {
-                        enable: false,
-                        speed: 1,
-                        opacity_min: 0.1,
-                        sync: false
-                    }
-                },
-                size: {
-                    value: 3,
-                    random: true,
-                    anim: {
-                        enable: false,
-                        speed: 40,
-                        size_min: 0.1,
-                        sync: false
-                    }
-                },
-                line_linked: {
-                    enable: true,
-                    distance: 150,
-                    color: '#06d6a0',
-                    opacity: 0.05,
-                    width: 1
-                },
-                move: {
-                    enable: true,
-                    speed: 2,
-                    direction: 'none',
-                    random: false,
-                    straight: false,
-                    out_mode: 'out',
-                    bounce: false,
-                    attract: {
-                        enable: false,
-                        rotateX: 600,
-                        rotateY: 1200
-                    }
-                }
-            },
-            interactivity: {
-                detect_on: 'canvas',
-                events: {
-                    onhover: {
-                        enable: true,
-                        mode: 'grab'
-                    },
-                    onclick: {
-                        enable: true,
-                        mode: 'push'
-                    },
-                    resize: true
-                },
-                modes: {
-                    grab: {
-                        distance: 140,
-                        line_linked: {
-                            opacity: 0.2
-                        }
-                    },
-                    push: {
-                        particles_nb: 4
-                    }
-                }
-            },
-            retina_detect: true
-        });
-    }
-}
-
-// Scroll Effects
-function initScrollEffects() {
-    const header = document.querySelector('.site-header');
-    
-    window.addEventListener('scroll', function() {
-        if (window.scrollY > 50) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
-        }
+// Close mobile menu when clicking on a link
+document.querySelectorAll('.nav-menu a').forEach(link => {
+    link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
     });
-}
+});
 
-// Dashboard Live Updates
-function initDashboard() {
-    const metrics = {
-        accuracy: { element: document.getElementById('accuracy'), base: 73.2, variance: 2 },
-        sharpe: { element: document.getElementById('sharpe'), base: 1.84, variance: 0.1 },
-        drawdown: { element: document.getElementById('drawdown'), base: -12.3, variance: 1.5 },
-        winrate: { element: document.getElementById('winrate'), base: 68.7, variance: 3 },
-        gpu: { element: document.getElementById('gpu'), base: 84, variance: 5 },
-        retrain: { element: document.getElementById('retrain'), base: 0, variance: 0 }
-    };
-
-    function updateMetrics() {
-        Object.keys(metrics).forEach(key => {
-            const metric = metrics[key];
-            if (!metric.element) return;
-
-            if (key === 'retrain') {
-                // Update retrain timer
-                const seconds = Math.floor(Math.random() * 15) + 1;
-                metric.element.textContent = `${seconds}s ago`;
-            } else {
-                // Update numeric metrics with realistic variance
-                const variance = (Math.random() - 0.5) * metric.variance;
-                const newValue = metric.base + variance;
-                
-                if (key === 'accuracy' || key === 'winrate') {
-                    metric.element.textContent = `${newValue.toFixed(1)}%`;
-                } else if (key === 'sharpe') {
-                    metric.element.textContent = newValue.toFixed(2);
-                } else if (key === 'drawdown') {
-                    metric.element.textContent = `${newValue.toFixed(1)}%`;
-                } else if (key === 'gpu') {
-                    metric.element.textContent = `${Math.round(newValue)}%`;
-                }
-            }
-        });
-
-        // Update signals occasionally
-        if (Math.random() < 0.3) {
-            updateSignals();
-        }
-    }
-
-    function updateSignals() {
-        const signalsContainer = document.querySelector('.signals-list');
-        if (!signalsContainer) return;
-
-        const stocks = ['NVDA', 'AAPL', 'TSLA', 'MSFT', 'GOOGL', 'AMZN'];
-        const actions = ['BUY', 'SELL'];
-        
-        const now = new Date();
-        const timeString = now.toTimeString().substr(0, 8);
-        
-        const stock = stocks[Math.floor(Math.random() * stocks.length)];
-        const action = actions[Math.floor(Math.random() * actions.length)];
-        const confidence = (Math.random() * 20 + 80).toFixed(1); // 80-100%
-        
-        const newSignal = document.createElement('div');
-        newSignal.className = 'signal-item';
-        newSignal.innerHTML = `
-            <span class="signal-time">${timeString}</span>
-            <span class="signal-pair">${stock}</span>
-            <span class="signal-action ${action.toLowerCase()}">${action}</span>
-            <span class="signal-confidence">${confidence}%</span>
-        `;
-        
-        // Add new signal to top and remove oldest if more than 3
-        signalsContainer.insertBefore(newSignal, signalsContainer.firstChild);
-        if (signalsContainer.children.length > 3) {
-            signalsContainer.removeChild(signalsContainer.lastChild);
-        }
-    }
-
-    // Update every 3-8 seconds
-    setInterval(updateMetrics, Math.random() * 5000 + 3000);
-    
-    // Initial update
-    updateMetrics();
-}
-
-// Mobile Menu
-function initMobileMenu() {
-    const toggle = document.querySelector('.mobile-menu-toggle');
-    const nav = document.querySelector('nav');
-    
-    if (toggle && nav) {
-        toggle.addEventListener('click', function() {
-            nav.classList.toggle('active');
-            toggle.classList.toggle('active');
-        });
-    }
-}
-
-// Contact Form
-function initContactForm() {
-    const form = document.getElementById('contact-form');
-    
-    if (form) {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const formData = new FormData(form);
-            const data = {
-                name: formData.get('name'),
-                email: formData.get('email'),
-                subject: formData.get('subject'),
-                message: formData.get('message')
-            };
-            
-            // Simulate form submission
-            const submitBtn = form.querySelector('.form-submit');
-            const originalText = submitBtn.textContent;
-            
-            submitBtn.textContent = 'Sending...';
-            submitBtn.disabled = true;
-            
-            setTimeout(() => {
-                submitBtn.textContent = 'Message Sent!';
-                submitBtn.style.background = '#22c55e';
-                
-                setTimeout(() => {
-                    submitBtn.textContent = originalText;
-                    submitBtn.style.background = '';
-                    submitBtn.disabled = false;
-                    form.reset();
-                }, 2000);
-            }, 1500);
-        });
-    }
-}
-
-// Animation on Scroll
-function initAnimations() {
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-    
-    const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, observerOptions);
-    
-    // Animate cards and sections
-    const animateElements = document.querySelectorAll('.card, .stat-card, .project-card, .insight-card, .timeline-item');
-    
-    animateElements.forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(el);
-    });
-}
-
-// Terminal Animation
-function animateTerminal() {
-    const codeLines = document.querySelectorAll('.code-line');
-    
-    codeLines.forEach((line, index) => {
-        line.style.animationDelay = `${index * 0.5}s`;
-    });
-}
-
-// Counter Animation for Stats
-function animateCounters() {
-    const counters = document.querySelectorAll('.stat-number');
-    
-    counters.forEach(counter => {
-        const target = counter.textContent;
-        const numericTarget = parseFloat(target.replace(/[^0-9.]/g, ''));
-        
-        if (numericTarget) {
-            let current = 0;
-            const increment = numericTarget / 50;
-            
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= numericTarget) {
-                    current = numericTarget;
-                    clearInterval(timer);
-                }
-                
-                // Format the number based on original format
-                if (target.includes('$') && target.includes('B')) {
-                    counter.textContent = `$${current.toFixed(1)}B+`;
-                } else if (target.includes('$') && target.includes('K')) {
-                    counter.textContent = `$${Math.round(current)}K+`;
-                } else if (target.includes('+')) {
-                    counter.textContent = `${Math.round(current)}+`;
-                } else if (target.includes('s')) {
-                    counter.textContent = `${Math.round(current)}s`;
-                } else {
-                    counter.textContent = Math.round(current);
-                }
-            }, 50);
-        }
-    });
-}
-
-// Performance monitoring
-function monitorPerformance() {
-    // Basic performance monitoring
-    const observer = new PerformanceObserver((list) => {
-        const entries = list.getEntries();
-        entries.forEach((entry) => {
-            if (entry.entryType === 'navigation') {
-                console.log('Page load time:', entry.loadEventEnd - entry.loadEventStart);
-            }
-        });
-    });
-    
-    observer.observe({entryTypes: ['navigation']});
-}
-
-// Smooth scrolling for anchor links
-document.addEventListener('click', function(e) {
-    if (e.target.matches('a[href^="#"]')) {
+// Smooth scrolling for navigation links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
         e.preventDefault();
-        
-        const targetId = e.target.getAttribute('href').substr(1);
-        const targetElement = document.getElementById(targetId);
-        
-        if (targetElement) {
-            const headerHeight = document.querySelector('.site-header').offsetHeight;
-            const targetPosition = targetElement.offsetTop - headerHeight - 20;
-            
-            window.scrollTo({
-                top: targetPosition,
-                behavior: 'smooth'
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
             });
         }
+    });
+});
+
+// Navbar background on scroll
+window.addEventListener('scroll', () => {
+    const navbar = document.querySelector('.navbar');
+    if (window.scrollY > 100) {
+        navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+        navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+    } else {
+        navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+        navbar.style.boxShadow = 'none';
     }
 });
 
-// Initialize performance monitoring
-monitorPerformance();
+// Intersection Observer for animations
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+};
 
-// Add some easter eggs for developers who inspect the code
-console.log(`
-🚀 Corey Francis Portfolio - Enhanced Version
-🔥 Built with: HTML5, CSS3, Vanilla JS
-⚡ Features: Live dashboard, particle effects, responsive design
-💼 Finance + AI: Systems that reconcile, predict, and profit
-📧 Contact: coreyfrancis1981@outlook.com
-`);
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('fade-in-up');
+        }
+    });
+}, observerOptions);
 
-// Add some market-style logging
-setInterval(() => {
-    const messages = [
-        '📊 Model retraining completed',
-        '⚡ GPU utilization optimized', 
-        '🎯 New trading signal generated',
-        '🔒 Security scan completed',
-        '📈 Performance metrics updated'
-    ];
+// Observe elements for animation
+document.querySelectorAll('.skill-category, .timeline-item, .cert-card').forEach(el => {
+    observer.observe(el);
+});
+
+// Animate skill bars when they come into view
+const skillObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const skillBars = entry.target.querySelectorAll('.skill-progress');
+            skillBars.forEach((bar, index) => {
+                setTimeout(() => {
+                    bar.style.width = bar.style.width;
+                }, index * 200);
+            });
+        }
+    });
+}, observerOptions);
+
+document.querySelectorAll('.skill-category').forEach(category => {
+    skillObserver.observe(category);
+});
+
+// Contact form handling
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
     
-    if (Math.random() < 0.1) { // 10% chance every interval
-        console.log(`[${new Date().toTimeString().substr(0, 8)}] ${messages[Math.floor(Math.random() * messages.length)]}`);
+    const formData = new FormData(this);
+    const name = formData.get('name');
+    const email = formData.get('email');
+    const company = formData.get('company');
+    const message = formData.get('message');
+    
+    // In a real implementation, this would send to a backend
+    console.log('Form submitted:', { name, email, company, message });
+    
+    // Show success message
+    const button = this.querySelector('button[type="submit"]');
+    const originalText = button.textContent;
+    button.textContent = 'Message Sent!';
+    button.style.background = '#10b981';
+    
+    setTimeout(() => {
+        button.textContent = originalText;
+        button.style.background = '';
+        this.reset();
+    }, 3000);
+});
+
+// Typing effect for hero title
+function typeWriter(element, text, speed = 100) {
+    let i = 0;
+    element.innerHTML = '';
+    
+    function type() {
+        if (i < text.length) {
+            element.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(type, speed);
+        }
     }
-}, 5000);
+    type();
+}
+
+// Floating elements animation
+const floatingElements = document.querySelectorAll('.float-item');
+floatingElements.forEach((element, index) => {
+    element.style.animationDelay = `${index * 0.5}s`;
+});
+
+// Parallax effect for hero section
+window.addEventListener('scroll', () => {
+    const scrolled = window.pageYOffset;
+    const hero = document.querySelector('.hero');
+    const heroContent = document.querySelector('.hero-content');
+    
+    if (hero && heroContent) {
+        heroContent.style.transform = `translateY(${scrolled * 0.5}px)`;
+    }
+});
+
+// Counter animation for stats
+function animateCounter(element, start, end, duration) {
+    let startTimestamp = null;
+    const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        const current = Math.floor(progress * (end - start) + start);
+        
+        if (element.textContent.includes('$')) {
+            element.textContent = `$${current.toLocaleString()}${current >= 1000000000 ? 'B+' : 'M+'}`;
+        } else if (element.textContent.includes('%')) {
+            element.textContent = `${current}%`;
+        } else {
+            element.textContent = `${current}+`;
+        }
+        
+        if (progress < 1) {
+            window.requestAnimationFrame(step);
+        }
+    };
+    window.requestAnimationFrame(step);
+}
+
+// Trigger counter animations when stats come into view
+const statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const statNumbers = entry.target.querySelectorAll('.stat-number');
+            statNumbers.forEach(stat => {
+                const text = stat.textContent;
+                let target = 0;
+                
+                if (text.includes('$5.1B+')) {
+                    animateCounter(stat, 0, 5.1, 2000);
+                } else if (text.includes('30%')) {
+                    animateCounter(stat, 0, 30, 1500);
+                } else if (text.includes('15+')) {
+                    animateCounter(stat, 0, 15, 1000);
+                }
+            });
+            statsObserver.unobserve(entry.target);
+        }
+    });
+});
+
+const heroStats = document.querySelector('.hero-stats');
+if (heroStats) {
+    statsObserver.observe(heroStats);
+}
+
+// Dynamic background color based on time
+function setThemeBasedOnTime() {
+    const hour = new Date().getHours();
+    const body = document.body;
+    
+    if (hour >= 18 || hour < 6) {
+        body.classList.add('dark-mode');
+    } else {
+        body.classList.remove('dark-mode');
+    }
+}
+
+// Add dark mode styles
+const style = document.createElement('style');
+style.textContent = `
+    .dark-mode {
+        --bg-primary: #111827;
+        --bg-secondary: #1f2937;
+        --text-primary: #f9fafb;
+        --text-secondary: #d1d5db;
+        --border-color: #374151;
+    }
+    
+    .dark-mode .navbar {
+        background: rgba(17, 24, 39, 0.95);
+        border-color: #374151;
+    }
+    
+    .dark-mode .skill-category,
+    .dark-mode .timeline-content,
+    .dark-mode .cert-card,
+    .dark-mode .contact-form {
+        background: #1f2937;
+        border-color: #374151;
+    }
+`;
+document.head.appendChild(style);
+
+// Initialize theme
+setThemeBasedOnTime();
+
+// Update theme every hour
+setInterval(setThemeBasedOnTime, 3600000);
+
+// Performance optimization - lazy loading
+if ('IntersectionObserver' in window) {
+    const imageObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                img.src = img.dataset.src;
+                img.classList.remove('lazy');
+                imageObserver.unobserve(img);
+            }
+        });
+    });
+    
+    document.querySelectorAll('img[data-src]').forEach(img => {
+        imageObserver.observe(img);
+    });
+}
+
+// Add keyboard navigation
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Tab' && !e.shiftKey) {
+        const focusableElements = document.querySelectorAll(
+            'a[href], button, textarea, input[type="text"], input[type="email"]'
+        );
+        
+        if (document.activeElement === focusableElements[focusableElements.length - 1]) {
+            e.preventDefault();
+            focusableElements[0].focus();
+        }
+    }
+});
+
+// Console Easter egg
+console.log(`
+%c👋 Hey there, fellow developer!
+
+%cCorey Francis - Finance Leader | Cybersecurity Expert | Systems Innovator
+
+%c💡 Fun fact: I've optimized over $5.1B in payments and reduced costs by 30%+
+🔒 Security+ certified and ready to secure your financial future
+
+Let's connect: coreyfrancis1981@outlook.com
+`, 
+'color: #2563eb; font-size: 16px; font-weight: bold;',
+'color: #1f2937; font-size: 14px;',
+'color: #6b7280; font-size: 12px;'
+);
+
+// Add loading animation
+window.addEventListener('load', () => {
+    document.body.classList.add('loaded');
+});
+
+// Add CSS for loading animation
+const loadingStyle = document.createElement('style');
+loadingStyle.textContent = `
+    body:not(.loaded) {
+        overflow: hidden;
+    }
+    
+    body:not(.loaded)::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    body:not(.loaded)::after {
+        content: 'Loading...';
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 1.5rem;
+        font-weight: 600;
+        z-index: 10000;
+    }
+`;
+document.head.appendChild(loadingStyle);
